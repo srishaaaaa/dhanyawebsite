@@ -209,3 +209,15 @@ export async function getFeaturedReviews(limit = 6) {
     .where(and(eq(reviews.status, "approved"), eq(reviews.isFeatured, true), isPublished()))
     .orderBy(desc(reviews.createdAt)).limit(limit);
 }
+
+/** Atelier showroom: each top-level category that has published products, with up to `per` of them (newest first). */
+export async function getAtelierRooms(maxRooms = 5, per = 3) {
+  const cats = (await getVisibleCategories(false)).filter((c) => !c.parentId);
+  const rooms: { slug: string; name: string; imageUrl: string | null; products: CardProduct[] }[] = [];
+  for (const c of cats) {
+    if (rooms.length >= maxRooms) break;
+    const ps = await getCards(eq(products.categoryId, c.id), [desc(products.updatedAt)], per);
+    if (ps.length) rooms.push({ slug: c.slug, name: c.name, imageUrl: (c as { imageUrl?: string | null }).imageUrl ?? null, products: ps });
+  }
+  return rooms;
+}

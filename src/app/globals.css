@@ -8,10 +8,10 @@
    triplets so the owner can re-theme from Admin → Store settings.
    ===================================================================== */
 :root {
-  --aubergine: #30042E; --burgundy: #54162F; --ivory: #F8F3EB;
-  --gold: #C8A66A; --rose: #E8D5D5; --charcoal: #211D20;
-  --c-aubergine: 48 4 46; --c-plum: 27 7 26; --c-burgundy: 84 22 47; --c-ivory: 248 243 235;
-  --c-gold: 200 166 106; --c-rose: 232 213 213; --c-charcoal: 33 29 32;
+  --aubergine: #4A1426; --burgundy: #7A1F36; --ivory: #FAF5EC;
+  --gold: #B8924A; --rose: #D9B8B2; --charcoal: #2A1F1B;
+  --c-aubergine: 74 20 38; --c-plum: 31 20 17; --c-burgundy: 122 31 54; --c-ivory: 250 245 236;
+  --c-gold: 184 146 74; --c-rose: 217 184 178; --c-charcoal: 42 31 27;
   /* motion language: one ease for entrances, one for scrubs, three durations */
   --ease-silk: cubic-bezier(.2,.7,.2,1);
   --ease-curtain: cubic-bezier(.7,0,.2,1);

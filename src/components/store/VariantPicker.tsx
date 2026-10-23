@@ -43,9 +43,12 @@ export default function VariantPicker({ product: p, compact = false, onColor, on
   const allSold = p.variants.every((v) => v.available <= 0);
   const maxQty = Math.min(variant?.available ?? 0, 10);
 
-  async function go(buyNow: boolean) {
+  async function go(buyNow: boolean, from?: HTMLElement) {
     if (!variant) { setPrompt(true); return; }
+    const rect = from?.getBoundingClientRect();
+    const src = (p.images.find((i) => i.colorName === variant.color) ?? p.images[0])?.url;
     const ok = await add(variant.id, qty);
+    if (ok && !buyNow && rect && src) window.dispatchEvent(new CustomEvent("dhanya:fly", { detail: { src, x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 } }));
     if (ok) { onAdded?.(); if (buyNow) router.push("/cart"); }
   }
 
@@ -114,7 +117,7 @@ export default function VariantPicker({ product: p, compact = false, onColor, on
           <span className="w-8 text-center tabular-nums" aria-live="polite">{qty}</span>
           <button type="button" className="px-3 py-3 disabled:opacity-30" aria-label="Increase quantity" disabled={!variant || qty >= maxQty} onClick={() => setQty((q) => q + 1)}><Plus size={14} /></button>
         </div>
-        <button type="button" disabled={busy || allSold || (variant !== null && variant.available <= 0)} onClick={() => go(false)}
+        <button type="button" disabled={busy || allSold || (variant !== null && variant.available <= 0)} onClick={(e) => go(false, e.currentTarget)}
           className="btn-primary flex-1 min-w-40">{busy ? "Adding…" : allSold ? "Sold out" : "Add to bag"}</button>
       </div>
       {!compact && !allSold && (

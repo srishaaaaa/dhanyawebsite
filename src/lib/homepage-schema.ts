@@ -50,10 +50,10 @@ export const SECTION_LABEL: Record<SectionType, string> = {
 
 export const DEFAULTS: ContentMap = {
   hero: {
-    heading: "Tradition, sculpted into something extraordinary.",
-    subheading: "Discover contemporary Indian elegance through considered silhouettes, expressive textiles and timeless occasionwear.",
+    heading: "Tradition, Reimagined.",
+    subheading: "Discover the art of dressing beautifully.",
     primaryCta: { label: "EXPLORE THE COLLECTION", href: "/shop" },
-    secondaryCta: { label: "DISCOVER NEW ARRIVALS", href: "/shop?sort=newest" },
+    secondaryCta: { label: "DISCOVER OUR STORY", href: "/about" },
     scene: "silk3d",
   },
   banner: { text: "Festive edit now live — complimentary shipping on orders over ₹2,999", cta: { label: "Shop now", href: "/shop" }, tone: "gold" },
@@ -65,7 +65,7 @@ export const DEFAULTS: ContentMap = {
     cta: { label: "SHOP THE EDIT", href: "/shop" }, imageSide: "left", tone: "dark",
   },
   story: {
-    heading: "A boutique, chosen by hand.",
+    heading: "A Little More Than What You Wear.",
     body: "Dhanya began with a simple belief: what you wear should feel like it was meant for you. Every piece in the boutique is selected for its fabric, its finish and the way it carries a story — so that getting dressed feels less like a routine and more like a ritual.",
     cta: { label: "READ OUR STORY", href: "/about" },
   },

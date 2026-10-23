@@ -1,4 +1,5 @@
 "use client";
+import FlyToCart from "./FlyToCart";
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 
 export type CartLine = {
@@ -81,6 +82,7 @@ export default function StoreProviders({ children }: { children: React.ReactNode
   return (
     <StoreCtx.Provider value={value}>
       {children}
+      <FlyToCart />
       <div aria-live="polite" className="pointer-events-none fixed bottom-5 left-1/2 z-[70] flex w-[min(92vw,420px)] -translate-x-1/2 flex-col gap-2">
         {toasts.map((t) => (
           <p key={t.id} role={t.tone === "err" ? "alert" : "status"}

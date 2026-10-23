@@ -91,7 +91,7 @@ export default function Header({ nav, announcements, logo, collections = [], cat
               <Heart size={19} strokeWidth={1.3} />
               {wishlist.size > 0 && <span className="badge-dot">{wishlist.size}</span>}
             </Link>
-            <button onClick={() => setCartOpen(true)} aria-label={`Shopping bag, ${count} items`} className="relative p-1 transition-transform duration-500 hover:scale-110">
+            <button data-cart-target onClick={() => setCartOpen(true)} aria-label={`Shopping bag, ${count} items`} className="relative p-1 transition-transform duration-500 hover:scale-110">
               <ShoppingBag size={19} strokeWidth={1.3} />
               {count > 0 && <span key={count} className="badge-dot toast-in">{count}</span>}
             </button>

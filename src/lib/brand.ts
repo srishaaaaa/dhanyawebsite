@@ -4,7 +4,7 @@ import { inArray } from "drizzle-orm";
 import { db } from "@/db";
 import { storeSettings } from "@/db/schema";
 
-export const DEFAULT_COLORS = { aubergine: "#30042E", burgundy: "#54162F", ivory: "#F8F3EB", gold: "#C8A66A", rose: "#E8D5D5", charcoal: "#211D20" };
+export const DEFAULT_COLORS = { aubergine: "#4A1426", burgundy: "#7A1F36", ivory: "#FAF5EC", gold: "#B8924A", rose: "#D9B8B2", charcoal: "#2A1F1B" };
 export type BrandColors = typeof DEFAULT_COLORS;
 export type Brand = {
   logoUrl?: string; logoAlt?: string; faviconUrl?: string;
