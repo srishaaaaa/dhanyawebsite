@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import PageHero from "@/components/store/PageHero";
 import { notFound } from "next/navigation";
 import { getCustomer } from "@/lib/customer";
 import { loadOrder } from "@/lib/order-view";
@@ -14,5 +15,5 @@ export default async function OrderPage({ params, searchParams }: { params: Prom
   const [o, me, { shipping }] = await Promise.all([loadOrder(id), getCustomer(), getSettings()]);
   // Same 404 for "doesn't exist" and "not yours", so order ids can't be probed.
   if (!o || !(await canViewOrder(o, { uid: me?.id ?? null, token: t ?? null }))) notFound();
-  return <div className="container-x py-12 pb-24"><OrderDetail o={o} token={t ?? null} returnDays={shipping.returnWindowDays ?? 7} /></div>;
+  return <><PageHero compact kicker="Your order" title={o.orderNumber} /><div className="container-x py-14 pb-24"><OrderDetail o={o} token={t ?? null} returnDays={shipping.returnWindowDays ?? 7} /></div></>;
 }

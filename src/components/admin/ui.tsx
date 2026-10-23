@@ -1,8 +1,8 @@
 import Link from "next/link";
 
-export const inputCls = "mt-1 w-full border border-charcoal/20 bg-white px-3 py-2 text-sm rounded-sm focus:border-aubergine focus:outline-none";
+export const inputCls = "mt-1 w-full border border-charcoal/20 bg-white px-3 py-2 text-sm rounded-sm transition-colors focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold";
 export const btn = {
-  primary: "inline-flex items-center justify-center gap-2 bg-aubergine px-4 py-2 text-sm text-ivory hover:bg-burgundy disabled:opacity-50 rounded-sm",
+  primary: "inline-flex items-center justify-center gap-2 bg-aubergine px-4 py-2 text-sm text-ivory transition-colors hover:bg-burgundy disabled:opacity-50 rounded-sm",
   secondary: "inline-flex items-center justify-center gap-2 border border-charcoal/20 bg-white px-4 py-2 text-sm hover:border-aubergine disabled:opacity-50 rounded-sm",
   danger: "inline-flex items-center justify-center gap-2 border border-burgundy/40 px-4 py-2 text-sm text-burgundy hover:bg-burgundy hover:text-ivory disabled:opacity-50 rounded-sm",
   ghost: "inline-flex items-center gap-1 text-sm text-charcoal/70 hover:text-aubergine",
@@ -12,7 +12,8 @@ export function PageHeader({ title, description, actions }: { title: string; des
   return (
     <div className="flex flex-wrap items-end justify-between gap-4 mb-6">
       <div>
-        <h1 className="font-serif text-4xl text-aubergine">{title}</h1>
+        <p className="kicker mb-3 !text-burgundy">Atelier console</p>
+        <h1 className="font-serif text-5xl font-light leading-none text-aubergine">{title}</h1>
         {description && <p className="text-sm text-charcoal/60 mt-1 max-w-2xl">{description}</p>}
       </div>
       {actions && <div className="flex flex-wrap gap-2">{actions}</div>}
@@ -22,8 +23,8 @@ export function PageHeader({ title, description, actions }: { title: string; des
 
 export function Card({ title, children, className = "" }: { title?: string; children: React.ReactNode; className?: string }) {
   return (
-    <section className={`bg-white border border-charcoal/10 p-5 ${className}`}>
-      {title && <h2 className="font-serif text-xl text-aubergine mb-4">{title}</h2>}
+    <section className={`border border-charcoal/10 border-t-2 border-t-gold/70 bg-white p-6 shadow-[0_24px_40px_-32px_rgb(var(--c-aubergine)/.35)] ${className}`}>
+      {title && <h2 className="mb-4 font-serif text-2xl font-light text-aubergine">{title}</h2>}
       {children}
     </section>
   );

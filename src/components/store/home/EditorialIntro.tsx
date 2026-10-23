@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Img from "../Img";
+import Tilt from "../Tilt";
 
 /** Quiet ivory pause after the 3D opening: oversized type that slides against itself, framed photography, one concise statement. */
 export default function EditorialIntro({ heading, body, images, cta }: { heading: string; body: string; images: string[]; cta?: { label: string; href: string } }) {
@@ -14,6 +15,7 @@ export default function EditorialIntro({ heading, body, images, cta }: { heading
       </div>
       <div className="container-x -mt-[10vw] grid items-start gap-12 lg:grid-cols-12">
         <div className="lg:col-span-5 lg:pt-24">
+          <p className="kicker mb-6" data-reveal>The house of Dhanya</p>
           <h2 className="display text-4xl text-aubergine sm:text-6xl" data-reveal>{heading}</h2>
           <p className="mt-8 max-w-md text-lg leading-relaxed text-charcoal/75" data-reveal>{body}</p>
           {cta?.label && <Link href={cta.href} className="btn-outline mt-10" data-reveal>{cta.label}</Link>}
@@ -22,9 +24,11 @@ export default function EditorialIntro({ heading, body, images, cta }: { heading
           <div className="grid grid-cols-2 gap-5 lg:col-span-6 lg:col-start-7">
             {images.slice(0, 2).map((src, i) => (
               <div key={src + i} className={i === 1 ? "mt-16 sm:mt-28" : ""} data-depth={i === 0 ? "0.12" : "0.22"}>
-                <div className="relative aspect-[3/4] overflow-hidden rounded-t-[999px] bg-rose/50" data-reveal="mask">
-                  <Img src={src} alt="" sizes="(min-width:1024px) 22vw, 45vw" className="absolute inset-0 h-full w-full object-cover" />
-                </div>
+                <Tilt max={6}>
+                  <div className="relative aspect-[3/4] overflow-hidden rounded-t-[999px] border border-gold/40 bg-rose/50 p-2" data-reveal="mask">
+                    <Img src={src} alt="" sizes="(min-width:1024px) 22vw, 45vw" className="h-full w-full rounded-t-[999px] object-cover" />
+                  </div>
+                </Tilt>
               </div>
             ))}
           </div>

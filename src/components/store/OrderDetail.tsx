@@ -70,7 +70,7 @@ export default function OrderDetail({ o, token, returnDays }: { o: OrderFull; to
           {status === "return_requested" && <p className="mt-8 text-sm">Return requested{o.returnReason ? ` — “${o.returnReason}”` : ""}. We&apos;ll be in touch about pickup.</p>}
         </section>
         <aside className="space-y-8 text-sm">
-          <dl className="space-y-2 bg-white p-6">
+          <dl className="space-y-2 border border-gold/30 bg-white p-6">
             <div className="flex justify-between"><dt>Subtotal</dt><dd>{formatINR(o.subtotal)}</dd></div>
             {Number(o.discountTotal) > 0 && <div className="flex justify-between"><dt>Discount {o.couponCode && `(${o.couponCode})`}</dt><dd>− {formatINR(o.discountTotal)}</dd></div>}
             <div className="flex justify-between"><dt>Shipping</dt><dd>{Number(o.shippingTotal) === 0 ? "Free" : formatINR(o.shippingTotal)}</dd></div>

@@ -17,7 +17,7 @@ type QuoteRes = {
 };
 
 const EMPTY: Addr = { fullName: "", phone: "", line1: "", line2: "", city: "", state: "", pincode: "" };
-const field = "mt-1 w-full border border-charcoal/25 bg-white px-3 py-2.5 text-sm outline-none focus:border-aubergine";
+const field = "mt-1 w-full border border-charcoal/25 bg-white px-3.5 py-3 text-sm outline-none transition-colors focus:border-gold focus:ring-1 focus:ring-gold";
 
 export default function Checkout({ email: initialEmail, saved, signedIn, expressDays, standardDays }: { email: string; saved: Saved[]; signedIn: boolean; expressDays: string; standardDays: string }) {
   const router = useRouter();
@@ -159,7 +159,7 @@ export default function Checkout({ email: initialEmail, saved, signedIn, express
         <button disabled={placing || blocked} className="btn-primary w-full py-4 lg:hidden">{placing ? "PLEASE WAIT…" : payment === "cod" ? "PLACE ORDER" : `PAY ${t ? formatINR(t.grandTotal) : ""}`}</button>
       </form>
 
-      <aside aria-labelledby="sum-h" className="h-fit bg-white p-7 lg:sticky lg:top-24">
+      <aside aria-labelledby="sum-h" className="frame h-fit border border-gold/30 bg-white p-8 shadow-[0_40px_80px_-50px_rgb(var(--c-aubergine)/.5)] lg:sticky lg:top-28">
         <h2 id="sum-h" className="font-serif text-2xl">Order summary</h2>
         {qErr && <p role="alert" className="mt-3 text-sm text-burgundy">{qErr} <button onClick={loadQuote} className="underline">Retry</button></p>}
         {!q ? <div className="mt-6 space-y-3">{[0, 1, 2].map((i) => <div key={i} className="skeleton h-14" />)}</div> : (
@@ -205,7 +205,7 @@ const Row = ({ k, v }: { k: string; v: string }) => <div className="flex justify
 
 function Radio({ name, checked, onChange, title, sub, right }: { name: string; checked: boolean; onChange: () => void; title: string; sub?: string; right?: string }) {
   return (
-    <label className={`flex cursor-pointer items-center gap-4 border px-4 py-4 text-sm transition-colors ${checked ? "border-aubergine bg-white" : "border-charcoal/20 hover:border-charcoal/50"}`}>
+    <label className={`flex cursor-pointer items-center gap-4 border px-4 py-4 text-sm transition-colors ${checked ? "border-gold bg-white shadow-[0_0_0_1px_rgb(var(--c-gold))]" : "border-charcoal/20 hover:border-gold/60"}`}>
       <input type="radio" name={name} checked={checked} onChange={onChange} className="accent-aubergine" />
       <span className="flex-1"><span className="block">{title}</span>{sub && <span className="text-xs text-charcoal/55">{sub}</span>}</span>
       {right && <span className="tabular-nums">{right}</span>}

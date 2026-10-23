@@ -6,6 +6,8 @@ import { storeSettings } from "@/db/schema";
 export type StoreInfo = {
   name: string; currency: string; timezone: string;
   email?: string; phone?: string; address?: string; whatsapp?: string;
+  /** Shown in the "Visit us" section. openFrom/openTo are 24h "HH:MM" (IST) and drive the live Open/Closed badge. */
+  hours?: string; openFrom?: string; openTo?: string;
   announcement?: string; social?: { instagram?: string; facebook?: string; pinterest?: string; youtube?: string };
 };
 export type ShippingSettings = {

@@ -4,11 +4,11 @@ import { useActionState, useState } from "react";
 import { login, register, requestReset, resetPassword, updateProfile, changePassword, saveAddress, deleteAddress, type State } from "@/app/(store)/account/actions";
 import { INDIAN_STATES } from "@/lib/india";
 
-const input = "mt-1 w-full border-b border-charcoal/30 bg-transparent py-2 outline-none focus:border-aubergine";
+const input = "field mt-1";
 function F({ label, name, type = "text", state, ...rest }: { label: string; name: string; type?: string; state: State } & React.InputHTMLAttributes<HTMLInputElement>) {
   const err = state?.fields?.[name];
   return (
-    <label className="block text-sm">{label}
+    <label className="block text-[11px] font-medium uppercase tracking-[0.22em] text-charcoal/70">{label}
       <input name={name} type={type} aria-invalid={Boolean(err)} className={input} {...rest} />
       {err && <span className="mt-1 block text-xs text-burgundy">{err}</span>}
     </label>

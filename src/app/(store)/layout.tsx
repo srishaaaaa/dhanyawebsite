@@ -4,6 +4,7 @@ import { navigationMenus } from "@/db/schema";
 import StoreProviders from "@/components/store/StoreProviders";
 import Header, { type NavItem } from "@/components/store/Header";
 import Footer from "@/components/store/Footer";
+import StoreVisit from "@/components/store/StoreVisit";
 import CartDrawer from "@/components/store/CartDrawer";
 import RevealObserver from "@/components/store/Reveal";
 import CursorMagnet from "@/components/store/CursorMagnet";
@@ -56,6 +57,7 @@ export default async function StoreLayout({ children }: { children: React.ReactN
       <Header nav={nav} announcements={announcements} logo={brand.logoUrl ? { url: brand.logoUrl, alt: brand.logoAlt || "DHANYA BOUTIQUE" } : null}
         collections={cols.map((c) => ({ title: c.title, slug: c.slug, imageUrl: c.imageUrl }))} categories={cats.filter((c) => !c.parentId).map((c) => ({ name: c.name, slug: c.slug }))} />
       <main id="main" className="min-h-[60vh]">{children}</main>
+      <StoreVisit store={store} />
       <Footer store={store} collections={cols} extra={footer} paymentsLive={Boolean(process.env.RAZORPAY_KEY_ID && process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID)} />
       <CartDrawer />
     </StoreProviders>

@@ -12,8 +12,8 @@ export default function CartPageClient() {
     <div className={`grid gap-12 ${empty ? "" : "lg:grid-cols-[1fr_380px]"}`}>
       <div className="flex min-h-[40vh] flex-col"><CartLines large /></div>
       {cart && !empty && (
-        <aside aria-labelledby="sum-h" className="h-fit bg-white p-8 lg:sticky lg:top-24">
-          <h2 id="sum-h" className="font-serif text-2xl mb-6">Order summary</h2>
+        <aside aria-labelledby="sum-h" className="frame h-fit border border-gold/30 bg-white p-8 shadow-[0_40px_80px_-50px_rgb(var(--c-aubergine)/.5)] lg:sticky lg:top-28">
+          <h2 id="sum-h" className="mb-6 font-serif text-3xl font-light">Order summary</h2>
           <dl className="space-y-3 text-sm">
             <div className="flex justify-between"><dt>Subtotal (incl. GST)</dt><dd className="tabular-nums">{formatINR(cart.subtotal)}</dd></div>
             <div className="flex justify-between"><dt>Estimated shipping</dt><dd className="tabular-nums">{cart.shippingEstimate === 0 ? "Free" : cart.shippingEstimate === null ? "—" : formatINR(cart.shippingEstimate)}</dd></div>

@@ -66,8 +66,8 @@ export default function Filters({ facets, total }: { facets: Facets; total: numb
 
   return (
     <div className="mb-10">
-      <div className="flex flex-wrap items-center gap-3 border-y border-charcoal/10 py-3">
-        <button onClick={() => setOpen(true)} className="flex items-center gap-2 text-sm"><SlidersHorizontal size={16} strokeWidth={1.4} />Filter{chips.length ? ` (${chips.length})` : ""}</button>
+      <div className="sticky top-[76px] z-20 -mx-5 flex flex-wrap items-center gap-4 border-y border-gold/30 bg-ivory/90 px-5 py-4 backdrop-blur sm:-mx-10 sm:px-10 lg:-mx-14 lg:px-14">
+        <button onClick={() => setOpen(true)} className="flex items-center gap-3 text-[11px] font-medium uppercase tracking-[0.26em] transition-colors hover:text-burgundy"><SlidersHorizontal size={16} strokeWidth={1.4} />Filter{chips.length ? ` (${chips.length})` : ""}</button>
         <p className="text-sm text-charcoal/60" aria-live="polite">{pending ? "Updating…" : `${total} piece${total === 1 ? "" : "s"}`}</p>
         <div className="ml-auto flex items-center gap-4">
           <label className="flex items-center gap-2 text-sm"><span className="hidden sm:inline text-charcoal/60">Sort</span>
@@ -88,10 +88,10 @@ export default function Filters({ facets, total }: { facets: Facets; total: numb
         </ul>
       )}
       <dialog ref={dlg} onClose={() => setOpen(false)} onClick={(e) => e.target === dlg.current && setOpen(false)} aria-label="Filters"
-        className="drawer-in m-0 ml-auto h-dvh max-h-none w-[min(100vw,400px)] bg-ivory p-0 text-charcoal backdrop:bg-aubergine/40">
+        className="drawer-in m-0 ml-auto h-dvh max-h-none w-[min(100vw,400px)] bg-ivory p-0 text-charcoal border-l border-gold/30 backdrop:bg-plum/60">
         <div className="flex h-full flex-col">
           <div className="flex items-center justify-between border-b border-charcoal/10 px-6 py-5">
-            <h2 className="font-serif text-2xl">Filter</h2>
+            <h2 className="font-serif text-3xl font-light">Refine</h2>
             <button onClick={() => setOpen(false)} aria-label="Close filters"><X size={20} strokeWidth={1.4} /></button>
           </div>
           <div className="flex-1 overflow-y-auto px-6 py-6">{panel}</div>

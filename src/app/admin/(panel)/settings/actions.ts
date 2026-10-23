@@ -18,7 +18,9 @@ const SCHEMAS = {
   store: z.object({
     name: z.string().trim().min(2).max(80), email: z.union([z.literal(""), z.string().email()]).transform((v) => v || undefined),
     phone: text(20), whatsapp: z.union([z.literal(""), z.undefined(), z.string().regex(MOBILE_RE, "10-digit mobile number")]).transform((v) => v || undefined),
-    address: text(400), announcement: text(160),
+    address: text(400), announcement: text(160), hours: text(80),
+    openFrom: z.union([z.literal(""), z.undefined(), z.string().regex(/^([01]\d|2[0-3]):[0-5]\d$/, "Use 24-hour HH:MM, like 10:00")]).transform((v) => v || undefined),
+    openTo: z.union([z.literal(""), z.undefined(), z.string().regex(/^([01]\d|2[0-3]):[0-5]\d$/, "Use 24-hour HH:MM, like 20:00")]).transform((v) => v || undefined),
     "social.instagram": https, "social.facebook": https, "social.pinterest": https, "social.youtube": https,
     currency: z.literal("INR").default("INR"), timezone: z.literal("Asia/Kolkata").default("Asia/Kolkata"),
   }),

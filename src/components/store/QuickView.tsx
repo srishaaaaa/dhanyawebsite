@@ -15,7 +15,7 @@ export default function QuickView({ slug, onClose }: { slug: string; onClose: ()
   }, [slug]);
   return (
     <dialog ref={ref} onClose={onClose} onClick={(e) => e.target === ref.current && ref.current?.close()}
-      className="modal-in m-auto w-[min(94vw,880px)] max-h-[90vh] bg-ivory p-0 text-charcoal backdrop:bg-aubergine/60 backdrop:backdrop-blur-sm"
+      className="modal-in m-auto w-[min(94vw,880px)] max-h-[90vh] bg-ivory p-0 text-charcoal backdrop:bg-plum/70"
       aria-label="Quick view">
       <button onClick={() => ref.current?.close()} className="absolute right-3 top-3 z-10 p-2" aria-label="Close quick view"><X size={20} /></button>
       {err ? <p className="p-10 text-center">This product couldn&apos;t be loaded. <Link className="underline" href={`/products/${slug}`}>Open the product page</Link>.</p>
@@ -24,7 +24,8 @@ export default function QuickView({ slug, onClose }: { slug: string; onClose: ()
           <div className="grid md:grid-cols-2">
             <Img src={p.images[0]?.url} alt={p.images[0]?.altText ?? p.name} sizes="(min-width:768px) 440px, 94vw" width={900} className="aspect-[3/4] w-full object-cover" />
             <div className="p-6 md:p-8">
-              <h2 className="font-serif text-3xl leading-tight pr-8">{p.name}</h2>
+              <p className="kicker mb-4">Quick view</p>
+              <h2 className="font-serif text-4xl font-light leading-tight pr-8">{p.name}</h2>
               <VariantPicker product={p} compact onAdded={() => ref.current?.close()} />
               <Link href={`/products/${p.slug}`} className="mt-6 inline-block text-sm underline underline-offset-4">View full details</Link>
             </div>

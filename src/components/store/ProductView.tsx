@@ -34,10 +34,10 @@ export default async function ProductView({ p, preview = false }: { p: ProductDe
   ];
 
   return (
-    <article className="container-x pt-8 pb-16">
+    <article className="container-x pb-20 pt-10">
       {!preview && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }} />}
       {preview && <p className="mb-6 border border-gold bg-gold/15 px-4 py-2 text-sm">Preview — status: <strong>{p.status}</strong>{p.publishAt ? `, publishes ${p.publishAt.toLocaleString("en-IN", { timeZone: "Asia/Kolkata" })}` : ""}. Shoppers can&apos;t see this page until it&apos;s active. <Link href={`/admin/products/${p.id}`} className="underline">Back to editor</Link></p>}
-      <nav aria-label="Breadcrumb" className="mb-8 text-xs text-charcoal/55">
+      <nav aria-label="Breadcrumb" className="mb-10 text-[11px] uppercase tracking-[0.22em] text-charcoal/55">
         <ol className="flex flex-wrap gap-2">{crumbs.map((c, i) => <li key={i} className="flex gap-2">{i > 0 && <span aria-hidden>/</span>}{c.href ? <Link href={c.href} className="hover:text-aubergine">{c.label}</Link> : <span aria-current="page">{c.label}</span>}</li>)}</ol>
       </nav>
 
@@ -47,24 +47,24 @@ export default async function ProductView({ p, preview = false }: { p: ProductDe
         video={p.videoUrl} model={p.model3dUrl} sizeGuide={p.sizeGuide}
         header={
           <header>
-            {p.designer && <p className="text-sm text-burgundy mb-3">{p.designer}</p>}
-            <Link href={`/studio/${p.slug}`} data-cursor="ENTER" className="mb-4 inline-flex items-center gap-2 border border-gold px-4 py-2 text-[11px] tracking-[0.22em] text-aubergine transition-colors hover:bg-gold">ENTER 3D STUDIO</Link>
-            <h1 className="display text-4xl sm:text-5xl">{p.name}</h1>
+            {p.designer && <p className="kicker mb-5 !text-burgundy">{p.designer}</p>}
+            <Link href={`/studio/${p.slug}`} data-cursor="ENTER" data-magnet className="btn-outline mb-6 !px-5 !py-2.5">Enter 3D studio</Link>
+            <h1 className="display text-[clamp(2.6rem,4.6vw,4.8rem)] text-aubergine">{p.name}</h1>
             {p.rating.n > 0 && <a href="#reviews" className="mt-3 flex items-center gap-2 text-sm"><Stars value={Number(p.rating.avg)} /> <span className="text-charcoal/60">{p.rating.avg} · {p.rating.n} review{p.rating.n === 1 ? "" : "s"}</span></a>}
           </header>
         }
         below={
           <div className="mt-10 space-y-8">
             <DeliveryCheck days={shipping.deliveryDays ?? "4–7"} />
-            <div className="divide-y divide-charcoal/15 border-y border-charcoal/15">
+            <div className="divide-y divide-gold/30 border-y border-gold/30">
               {details.filter(([, v]) => v).map(([k, v], i) => (
                 <details key={k} open={i === 0} className="group py-4">
-                  <summary className="flex cursor-pointer list-none items-center justify-between text-sm">{k}<span aria-hidden className="transition-transform group-open:rotate-45 text-lg leading-none">+</span></summary>
+                  <summary className="flex cursor-pointer list-none items-center justify-between text-[11px] font-medium uppercase tracking-[0.26em]">{k}<span aria-hidden className="transition-transform group-open:rotate-45 text-lg leading-none">+</span></summary>
                   <div className="prose-dhanya mt-3 text-sm text-charcoal/80" dangerouslySetInnerHTML={{ __html: renderMarkdown(v!) }} />
                 </details>
               ))}
               <details className="group py-4">
-                <summary className="flex cursor-pointer list-none items-center justify-between text-sm">Shipping and returns<span aria-hidden className="transition-transform group-open:rotate-45 text-lg leading-none">+</span></summary>
+                <summary className="flex cursor-pointer list-none items-center justify-between text-[11px] font-medium uppercase tracking-[0.26em]">Shipping and returns<span aria-hidden className="transition-transform group-open:rotate-45 text-lg leading-none">+</span></summary>
                 <div className="mt-3 text-sm text-charcoal/80 space-y-2">
                   <p>{shipping.freeShippingThreshold ? `Free shipping on orders over ₹${shipping.freeShippingThreshold.toLocaleString("en-IN")}. ` : ""}Usually dispatched within 1–2 working days.</p>
                   <p>Read our <Link href="/shipping-policy" className="underline">shipping policy</Link> and <Link href="/returns" className="underline">returns and exchanges</Link>.</p>
@@ -80,8 +80,8 @@ export default async function ProductView({ p, preview = false }: { p: ProductDe
         }
       />
 
-      <section id="reviews" aria-labelledby="rev-h" className="mt-24 border-t border-charcoal/15 pt-14">
-        <h2 id="rev-h" className="font-serif text-4xl">Reviews</h2>
+      <section id="reviews" aria-labelledby="rev-h" className="mt-28 border-t border-gold/40 pt-16">
+        <p className="kicker mb-5">Voices</p><h2 id="rev-h" className="display text-[clamp(2.6rem,5vw,4.5rem)] text-aubergine">Reviews</h2>
         {reviewList.length === 0 ? <p className="mt-4 text-charcoal/60">No reviews yet.</p> : (
           <ul className="mt-8 grid gap-10 md:grid-cols-2">
             {reviewList.map((r) => (
@@ -98,8 +98,8 @@ export default async function ProductView({ p, preview = false }: { p: ProductDe
 
       {related.length > 0 && (
         <section aria-labelledby="rel-h" className="mt-24">
-          <h2 id="rel-h" className="font-serif text-4xl mb-10">You may also like</h2>
-          <div className="grid grid-cols-2 gap-x-5 gap-y-12 lg:grid-cols-4">{related.slice(0, 4).map((r) => <ProductCard key={r.id} p={r} />)}</div>
+          <p className="kicker mb-5">Complete the look</p><h2 id="rel-h" className="display mb-14 text-[clamp(2.6rem,5vw,4.5rem)] text-aubergine">You may also like</h2>
+          <div className="grid grid-cols-2 gap-x-6 gap-y-16 lg:grid-cols-4">{related.slice(0, 4).map((r) => <ProductCard key={r.id} p={r} />)}</div>
         </section>
       )}
       <RecentlyViewed exclude={p.id} />

@@ -52,20 +52,20 @@ export default function VariantPicker({ product: p, compact = false, onColor, on
   return (
     <div className={compact ? "mt-3 space-y-5" : "space-y-6"}>
       <div>
-        <Price price={unit} compareAt={compare} size="lg" />
+        <Price price={unit} compareAt={compare} size="lg" className="font-serif !text-3xl font-light" />
         <p className="text-xs text-charcoal/55 mt-1">Inclusive of all taxes</p>
       </div>
 
       {colors.length > 0 && (
         <fieldset>
-          <legend className="text-sm mb-2">Colour: <span className="text-charcoal/70">{color}</span></legend>
+          <legend className="mb-3 text-[11px] font-medium uppercase tracking-[0.26em]">Colour: <span className="text-charcoal/70">{color}</span></legend>
           <div className="flex flex-wrap gap-2.5" role="radiogroup">
             {colors.map((c) => {
               const on = c.name === color;
               return (
                 <button key={c.name} type="button" role="radio" aria-checked={on} aria-label={`${c.name}${c.available ? "" : " (sold out)"}`} title={c.name}
                   onClick={() => { setColor(c.name); setSize(null); onColor?.(c.name); }}
-                  className={`relative h-9 w-9 rounded-full border transition ${on ? "ring-1 ring-offset-2 ring-aubergine border-aubergine" : "border-charcoal/25 hover:border-aubergine"} ${c.available ? "" : "opacity-40"}`}
+                  className={`relative h-10 w-10 rounded-full border transition-all duration-500 ${on ? "scale-110 border-gold ring-1 ring-gold ring-offset-4 ring-offset-ivory" : "border-charcoal/25 hover:scale-105 hover:border-gold"} ${c.available ? "" : "opacity-40"}`}
                   style={{ background: c.hex ?? "#e8e2da" }} />
               );
             })}
@@ -76,7 +76,7 @@ export default function VariantPicker({ product: p, compact = false, onColor, on
       {hasSizes && (
         <fieldset>
           <div className="flex items-baseline justify-between mb-2">
-            <legend className="text-sm">Size{size ? `: ${size}` : ""}</legend>
+            <legend className="text-[11px] font-medium uppercase tracking-[0.26em]">Size{size ? `: ${size}` : ""}</legend>
             {children /* size guide trigger */}
           </div>
           <div className="flex flex-wrap gap-2" role="radiogroup">
@@ -85,7 +85,7 @@ export default function VariantPicker({ product: p, compact = false, onColor, on
               return (
                 <button key={v.id} type="button" role="radio" aria-checked={on} aria-label={`${v.size}${out ? " sold out" : ""}`}
                   onClick={() => { setSize(v.size); setQty(1); setPrompt(false); }}
-                  className={`min-w-12 border px-3 py-2 text-sm transition ${on ? "border-aubergine bg-aubergine text-ivory" : "border-charcoal/25 hover:border-aubergine"} ${out && !on ? "text-charcoal/35 line-through" : ""}`}>
+                  className={`min-w-12 border px-4 py-2.5 text-[13px] tracking-wide transition-all duration-500 ${on ? "border-aubergine bg-aubergine text-ivory" : "border-charcoal/25 hover:border-gold"} ${out && !on ? "text-charcoal/35 line-through" : ""}`}>
                   {v.size}
                 </button>
               );

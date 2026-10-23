@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import SilkCanvas from "./SilkCanvas";
+import SilkField from "./silk/SilkField";
 
 /**
  * Cinematic entrance: aubergine room, light sweep, silk drifting through, wordmark resolving, then a curtain lift.
@@ -31,7 +31,7 @@ export default function Intro() {
   if (!show) return null;
   return (
     <div role="presentation" className={`fixed inset-0 z-[90] overflow-hidden bg-plum text-ivory transition-[clip-path] duration-[900ms] ease-[cubic-bezier(.7,0,.2,1)] ${leaving ? "[clip-path:inset(0_0_100%_0)]" : "[clip-path:inset(0)]"}`}>
-      <SilkCanvas className="intro-silk absolute inset-0 h-full w-full" />
+      <div className="intro-silk absolute inset-0"><SilkField tone="plum" /></div>
       <div aria-hidden className="intro-light absolute inset-0" />
       <div className="absolute inset-0 flex flex-col items-center justify-center">
         <p aria-hidden className="intro-word font-serif text-5xl font-light pl-[0.35em] sm:text-8xl">DHANYA</p>

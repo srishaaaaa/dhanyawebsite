@@ -2,6 +2,7 @@ import Link from "next/link";
 import { listProducts, type ListFilters } from "@/lib/catalog/queries";
 import ProductCard from "./ProductCard";
 import Filters from "./Filters";
+import SilkField from "./silk/SilkField";
 
 export type SP = { [k: string]: string | string[] | undefined };
 const one = (v: string | string[] | undefined) => (Array.isArray(v) ? v[0] : v);
@@ -31,7 +32,7 @@ export default async function Listing({ base, sp, scope, emptyTitle = "Nothing m
       <Filters facets={res.facets} total={res.total} />
       {res.items.length === 0 ? (
         <div className="py-24 text-center">
-          <p className="font-serif text-3xl">{f.q ? `Nothing found for “${f.q}”` : filtered ? emptyTitle : "New pieces are on their way"}</p>
+          <p className="font-serif text-5xl font-light text-aubergine">{f.q ? `Nothing found for “${f.q}”` : filtered ? emptyTitle : "New pieces are on their way"}</p>
           <p className="mt-3 text-charcoal/60">{filtered ? "Try removing a filter or widening the price range." : f.q ? "Check the spelling, or try a fabric, colour or occasion." : "This edit is being curated — explore the rest of the boutique in the meantime."}</p>
           <div className="mt-8 flex justify-center gap-3">
             {filtered && <Link href={base + (f.q ? `?q=${encodeURIComponent(f.q)}` : "")} className="btn-outline">Clear filters</Link>}
@@ -40,7 +41,7 @@ export default async function Listing({ base, sp, scope, emptyTitle = "Nothing m
         </div>
       ) : (
         <>
-          <ul className={f.view === "list" ? "space-y-8" : "grid grid-cols-2 gap-x-4 gap-y-12 sm:gap-x-6 lg:grid-cols-3 xl:grid-cols-4"}>
+          <ul data-stagger className={f.view === "list" ? "space-y-10" : "grid grid-cols-2 gap-x-5 gap-y-16 sm:gap-x-8 lg:grid-cols-3 xl:grid-cols-4"}>
             {res.items.map((p, i) => <li key={p.id}><ProductCard p={p} priority={i < 4} layout={f.view} /></li>)}
           </ul>
           {res.pages > 1 && (
@@ -50,7 +51,7 @@ export default async function Listing({ base, sp, scope, emptyTitle = "Nothing m
                 <span key={p} className="flex items-center gap-2">
                   {i > 0 && arr[i - 1] !== p - 1 && <span aria-hidden>…</span>}
                   <Link href={pageHref(p)} aria-current={p === res.page ? "page" : undefined}
-                    className={`grid h-10 w-10 place-items-center ${p === res.page ? "bg-aubergine text-ivory" : "hover:bg-rose/60"}`}>{p}</Link>
+                    className={`grid h-11 w-11 place-items-center border transition-colors ${p === res.page ? "border-aubergine bg-aubergine text-ivory" : "border-transparent hover:border-gold"}`}>{p}</Link>
                 </span>
               ))}
               {res.page < res.pages && <Link href={pageHref(res.page + 1)} rel="next" className="btn-outline px-4 py-2">Next</Link>}
@@ -64,16 +65,20 @@ export default async function Listing({ base, sp, scope, emptyTitle = "Nothing m
 
 export function ListingHeader({ title, intro, crumbs }: { title: string; intro?: string | null; crumbs: { label: string; href?: string }[] }) {
   return (
-    <header className="container-x pt-12 pb-10">
-      <nav aria-label="Breadcrumb" className="text-xs text-charcoal/55">
-        <ol className="flex flex-wrap gap-2">
-          {crumbs.map((c, i) => (
-            <li key={i} className="flex gap-2">{i > 0 && <span aria-hidden>/</span>}{c.href ? <Link href={c.href} className="hover:text-aubergine">{c.label}</Link> : <span aria-current="page">{c.label}</span>}</li>
-          ))}
-        </ol>
-      </nav>
-      <h1 className="display mt-6 text-5xl sm:text-7xl">{title}</h1>
-      {intro && <p className="mt-4 max-w-xl text-charcoal/70 leading-relaxed">{intro}</p>}
+    <header className="stage grain relative isolate mb-14 overflow-hidden">
+      <SilkField tone="plum" className="-z-10 opacity-90" />
+      <div aria-hidden className="absolute inset-0 -z-10 bg-gradient-to-t from-plum/80 via-plum/10 to-plum/40" />
+      <div className="container-x pb-16 pt-14 sm:pb-24 sm:pt-20">
+        <nav aria-label="Breadcrumb" className="text-[11px] uppercase tracking-[0.24em] text-ivory/55">
+          <ol className="flex flex-wrap gap-3">
+            {crumbs.map((c, i) => (
+              <li key={i} className="flex gap-3">{i > 0 && <span aria-hidden className="text-gold">/</span>}{c.href ? <Link href={c.href} className="hover:text-gold">{c.label}</Link> : <span aria-current="page" className="text-ivory">{c.label}</span>}</li>
+            ))}
+          </ol>
+        </nav>
+        <h1 className="display hero-fade mt-10 text-[clamp(3.5rem,10vw,10rem)]">{title}</h1>
+        {intro && <p className="hero-fade mt-6 max-w-xl text-lg leading-relaxed text-ivory/75" style={{ animationDelay: ".2s" }}>{intro}</p>}
+      </div>
     </header>
   );
 }

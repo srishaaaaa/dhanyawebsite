@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Box, Play } from "lucide-react";
+import { Box, ChevronLeft, ChevronRight, Play } from "lucide-react";
 import Img from "./Img";
 import { imgUrl } from "@/lib/image";
 
@@ -21,6 +21,8 @@ export default function Gallery({ name, images, video, model, color }: { name: s
   const [zoom, setZoom] = useState<{ x: number; y: number } | null>(null);
   const [show3d, setShow3d] = useState(false);
   const cur = media[i];
+  const touch = useRef<number | null>(null);
+  const go = (d: number) => setI((x) => (x + d + media.length) % Math.max(media.length, 1));
 
   return (
     <div className="lg:sticky lg:top-24 grid gap-3 lg:grid-cols-[76px_1fr]">
@@ -28,7 +30,7 @@ export default function Gallery({ name, images, video, model, color }: { name: s
         {media.map((m, j) => (
           <li key={m.url + j}>
             <button onClick={() => setI(j)} aria-label={`Show ${m.kind} ${j + 1}`} aria-current={j === i}
-              className={`relative block h-24 w-[72px] shrink-0 overflow-hidden border ${j === i ? "border-aubergine" : "border-transparent opacity-70 hover:opacity-100"}`}>
+              className={`relative block h-24 w-[72px] shrink-0 overflow-hidden border transition-all duration-500 ${j === i ? "border-gold opacity-100" : "border-transparent opacity-60 hover:opacity-100"}`}>
               {m.kind === "image" ? <Img src={m.url} alt="" width={160} sizes="72px" className="h-full w-full object-cover" />
                 : <span className="grid h-full w-full place-items-center bg-aubergine text-ivory"><Play size={18} /></span>}
             </button>
@@ -36,16 +38,23 @@ export default function Gallery({ name, images, video, model, color }: { name: s
         ))}
         {model && <li><button onClick={() => setShow3d(true)} className="grid h-24 w-[72px] place-items-center border border-charcoal/20 text-xs hover:border-aubergine"><Box size={18} /><span>3D</span></button></li>}
       </ul>
-      <div className="order-1 lg:order-2 relative aspect-[3/4] overflow-hidden bg-rose/40"
+      <div className="frame order-1 lg:order-2 relative aspect-[3/4] touch-pan-y overflow-hidden bg-rose/40" tabIndex={0} role="group" aria-roledescription="carousel" aria-label={`${name} images`}
+        onKeyDown={(e) => { if (e.key === "ArrowRight") go(1); if (e.key === "ArrowLeft") go(-1); }}
+        onTouchStart={(e) => { touch.current = e.touches[0].clientX; }}
+        onTouchEnd={(e) => { if (touch.current === null) return; const dx = e.changedTouches[0].clientX - touch.current; touch.current = null; if (Math.abs(dx) > 40) go(dx < 0 ? 1 : -1); }}
         onPointerMove={(e) => { if (e.pointerType !== "mouse" || cur?.kind !== "image") return; const r = e.currentTarget.getBoundingClientRect(); setZoom({ x: ((e.clientX - r.left) / r.width) * 100, y: ((e.clientY - r.top) / r.height) * 100 }); }}
         onPointerLeave={() => setZoom(null)}>
         {!cur ? <Img src={null} alt={name} className="h-full w-full" />
           : cur.kind === "video" ? <video key={cur.url} src={cur.url} controls playsInline autoPlay muted loop className="h-full w-full object-cover" aria-label={cur.alt} />
           : <>
-            <Img key={cur.url} src={cur.url} alt={cur.alt} priority sizes="(min-width:1024px) 55vw, 100vw" width={1400} className="h-full w-full object-cover animate-[fade_.5s_ease]" />
+            <Img key={cur.url} src={cur.url} alt={cur.alt} priority sizes="(min-width:1024px) 55vw, 100vw" width={1400} className="h-full w-full object-cover animate-[fade_.6s_ease]" />
             {zoom && <div aria-hidden className="absolute inset-0 hidden lg:block" style={{ backgroundImage: `url(${imgUrl(cur.url, 2200)})`, backgroundSize: "220%", backgroundPosition: `${zoom.x}% ${zoom.y}%` }} />}
           </>}
-        {media.length > 1 && <p className="absolute bottom-3 right-3 bg-ivory/85 px-2 py-0.5 text-xs tabular-nums">{i + 1} / {media.length}</p>}
+        {media.length > 1 && (<>
+          <button type="button" onClick={() => go(-1)} aria-label="Previous image" className="absolute left-3 top-1/2 z-[3] -translate-y-1/2 rounded-full bg-ivory/85 p-2.5 backdrop-blur transition-transform hover:scale-110"><ChevronLeft size={18} strokeWidth={1.3} /></button>
+          <button type="button" onClick={() => go(1)} aria-label="Next image" className="absolute right-3 top-1/2 z-[3] -translate-y-1/2 rounded-full bg-ivory/85 p-2.5 backdrop-blur transition-transform hover:scale-110"><ChevronRight size={18} strokeWidth={1.3} /></button>
+          <p className="absolute bottom-4 right-4 z-[3] bg-plum/80 px-3 py-1 text-[10px] uppercase tracking-[0.3em] tabular-nums text-ivory">{String(i + 1).padStart(2, "0")} / {String(media.length).padStart(2, "0")}</p>
+        </>)}
       </div>
       {show3d && model && <ModelDialog src={model} name={name} onClose={() => setShow3d(false)} />}
     </div>

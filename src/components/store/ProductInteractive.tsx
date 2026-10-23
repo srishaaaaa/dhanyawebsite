@@ -12,7 +12,7 @@ export default function ProductInteractive({ product, video, model, header, size
   const guide = useRef<HTMLDialogElement>(null);
   useEffect(() => trackViewed(product.id), [product.id]);
   return (
-    <div className="grid gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:gap-16">
+    <div className="grid gap-12 lg:grid-cols-[1.15fr_0.85fr] lg:gap-20">
       <Gallery name={product.name} images={product.images} video={video} model={model} color={color} />
       <div className="min-w-0">
         {header}
@@ -24,8 +24,8 @@ export default function ProductInteractive({ product, video, model, header, size
         {below}
       </div>
       <dialog ref={guide} onClick={(e) => e.target === guide.current && guide.current?.close()} aria-label="Size guide"
-        className="modal-in m-auto w-[min(94vw,640px)] max-h-[85vh] bg-ivory p-8 text-charcoal backdrop:bg-aubergine/50">
-        <div className="flex items-start justify-between gap-4"><h2 className="font-serif text-3xl">Size guide</h2><button onClick={() => guide.current?.close()} className="text-sm underline">Close</button></div>
+        className="modal-in m-auto w-[min(94vw,640px)] max-h-[85vh] bg-ivory p-8 text-charcoal backdrop:bg-plum/60">
+        <div className="flex items-start justify-between gap-4"><h2 className="font-serif text-4xl font-light">Size guide</h2><button onClick={() => guide.current?.close()} className="text-sm underline">Close</button></div>
         <p className="mt-4 whitespace-pre-line text-sm leading-relaxed">{sizeGuide || "Measurements for this piece follow our standard sizing."}</p>
         <p className="mt-4 text-xs text-charcoal/60">See the <a href="/size-guide" className="underline">full size guide</a> for body measurements and how to measure.</p>
       </dialog>

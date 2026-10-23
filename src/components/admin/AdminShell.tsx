@@ -20,10 +20,10 @@ export default function AdminShell({ children, user, allowed, logout }: Props) {
   const current = items.find((n) => (n.href === "/admin" ? path === "/admin" : path.startsWith(n.href)));
 
   return (
-    <div className="min-h-screen bg-ivory flex">
-      <aside className={`${collapsed ? "w-16" : "w-64"} ${mobileOpen ? "fixed inset-y-0 left-0 z-40 flex" : "hidden md:flex"} shrink-0 flex-col bg-aubergine text-ivory transition-[width] duration-200`}>
-        <div className="h-14 flex items-center justify-between px-4 border-b border-white/10">
-          {!collapsed && <span className="font-serif text-xl tracking-wordmark">DHANYA</span>}
+    <div className="admin-ui min-h-screen bg-[#F4EFE8] flex">
+      <aside className={`${collapsed ? "w-16" : "w-64"} ${mobileOpen ? "fixed inset-y-0 left-0 z-40 flex" : "hidden md:flex"} stage shrink-0 flex-col text-ivory transition-[width] duration-500 [transition-timing-function:var(--ease-silk)]`}>
+        <div className="flex h-16 items-center justify-between border-b border-gold/20 px-4">
+          {!collapsed && <span className="font-serif text-xl font-light tracking-wordmark">DHANYA<span className="ml-2 align-top text-[9px] tracking-[0.3em] text-gold">ATELIER</span></span>}
           <button onClick={() => setCollapsed(!collapsed)} aria-label="Toggle sidebar" className="hidden md:block text-gold">
             {collapsed ? <PanelLeftOpen size={18} /> : <PanelLeftClose size={18} />}
           </button>
@@ -33,7 +33,7 @@ export default function AdminShell({ children, user, allowed, logout }: Props) {
             const active = current?.href === href;
             return (
               <Link key={href} href={href} onClick={() => setMobileOpen(false)} title={label}
-                className={`flex items-center gap-3 px-5 py-2.5 text-sm ${active ? "bg-burgundy text-gold" : "text-ivory/80 hover:bg-white/5"}`}>
+                className={`relative flex items-center gap-3 px-5 py-3 text-[13px] tracking-wide transition-colors duration-300 ${active ? "bg-gold/10 text-gold before:absolute before:inset-y-0 before:left-0 before:w-0.5 before:bg-gold" : "text-ivory/70 hover:bg-white/5 hover:text-ivory"}`}>
                 <Icon size={17} />{!collapsed && <span>{label}</span>}
               </Link>
             );
@@ -43,7 +43,7 @@ export default function AdminShell({ children, user, allowed, logout }: Props) {
       {mobileOpen && <div className="fixed inset-0 z-30 bg-black/40 md:hidden" onClick={() => setMobileOpen(false)} />}
 
       <div className="flex-1 min-w-0 flex flex-col">
-        <header className="h-14 bg-white border-b border-charcoal/10 flex items-center gap-3 px-4">
+        <header className="sticky top-0 z-20 flex h-16 items-center gap-3 border-b border-charcoal/10 bg-white/85 px-4 backdrop-blur-xl">
           <button className="md:hidden text-sm underline" onClick={() => setMobileOpen(true)}>Menu</button>
           <nav aria-label="Breadcrumb" className="text-sm text-charcoal/60 hidden sm:block">
             Admin / <span className="text-charcoal">{current?.label ?? "Overview"}</span>
@@ -62,7 +62,7 @@ export default function AdminShell({ children, user, allowed, logout }: Props) {
             </form>
           </div>
         </header>
-        <main className="p-6">{children}</main>
+        <main className="p-6 lg:p-10">{children}</main>
       </div>
     </div>
   );

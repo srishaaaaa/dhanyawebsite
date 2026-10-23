@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import PageHero from "@/components/store/PageHero";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { CORE_PAGES, getPublishedPage } from "@/lib/pages";
@@ -22,12 +23,9 @@ export default async function CmsPage({ params }: P) {
   const p = await getPublishedPage(slug);
   if (!p && !CORE_PAGES[slug]) notFound();
   return (
-    <article className="container-x py-16 pb-28">
-      <header className="mb-12 max-w-3xl">
-        <nav aria-label="Breadcrumb" className="text-xs text-charcoal/55"><Link href="/" className="hover:text-aubergine">Home</Link> / <span aria-current="page">{p?.title ?? CORE_PAGES[slug]}</span></nav>
-        <h1 className="display mt-6 text-5xl sm:text-7xl">{p?.title ?? CORE_PAGES[slug]}</h1>
-        {p && <p className="mt-4 text-xs text-charcoal/50">Last updated {p.updatedAt.toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric" })}</p>}
-      </header>
+    <article>
+      <PageHero crumbs={[{ label: "Home", href: "/" }, { label: p?.title ?? CORE_PAGES[slug] }]} title={p?.title ?? CORE_PAGES[slug]} intro={p ? `Last updated ${p.updatedAt.toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric" })}` : undefined} />
+      <div className="container-x py-20 pb-28">
       {p && p.body.trim() ? (
         <div className="prose-dhanya" dangerouslySetInnerHTML={{ __html: renderMarkdown(p.body) }} />
       ) : (
@@ -36,6 +34,7 @@ export default async function CmsPage({ params }: P) {
           <Link href="/contact" className="btn-outline mt-8">Contact us</Link>
         </div>
       )}
+      </div>
     </article>
   );
 }

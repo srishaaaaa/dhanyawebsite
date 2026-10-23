@@ -18,7 +18,7 @@ export function NewsletterForm({ dark = true }: { dark?: boolean }) {
         <label htmlFor="nl-email" className="sr-only">Email address</label>
         <input id="nl-email" name="email" type="email" required autoComplete="email" placeholder="Your email address"
           className={`flex-1 bg-transparent py-3 text-sm outline-none ${dark ? "placeholder:text-ivory/50" : "placeholder:text-charcoal/40"}`} />
-        <button disabled={pending} className="px-2 text-sm tracking-wide">{pending ? "…" : "Subscribe"}</button>
+        <button disabled={pending} className="px-2 text-[11px] font-medium uppercase tracking-[0.26em] text-gold transition-opacity hover:opacity-70">{pending ? "…" : "Subscribe →"}</button>
       </div>
       <label className={`mt-3 flex items-start gap-2 text-xs ${dark ? "text-ivory/70" : "text-charcoal/60"}`}>
         <input type="checkbox" name="consent" required className="mt-0.5 accent-gold" />
@@ -32,13 +32,13 @@ export function NewsletterForm({ dark = true }: { dark?: boolean }) {
 export function ContactForm() {
   const [state, action, pending] = useActionState(sendContact, null);
   if (state?.ok) return <p role="status" className="font-serif text-2xl text-aubergine">{state.message}</p>;
-  const field = "mt-1 w-full border-b border-charcoal/30 bg-transparent py-2 outline-none focus:border-aubergine";
+  const field = "field mt-1";
   return (
     <form action={action} className="relative space-y-6">
       <Honeypot />
-      <label className="block text-sm">Your name<input name="name" required autoComplete="name" className={field} /></label>
-      <label className="block text-sm">Email<input name="email" type="email" required autoComplete="email" className={field} /></label>
-      <label className="block text-sm">How can we help?<textarea name="message" rows={5} required minLength={10} className={field} /></label>
+      <label className="block text-[11px] font-medium uppercase tracking-[0.22em] text-charcoal/70">Your name<input name="name" required autoComplete="name" className={field} /></label>
+      <label className="block text-[11px] font-medium uppercase tracking-[0.22em] text-charcoal/70">Email<input name="email" type="email" required autoComplete="email" className={field} /></label>
+      <label className="block text-[11px] font-medium uppercase tracking-[0.22em] text-charcoal/70">How can we help?<textarea name="message" rows={5} required minLength={10} className={field} /></label>
       {state && !state.ok && <p role="alert" className="text-sm text-burgundy">{state.message}</p>}
       <button disabled={pending} className="btn-primary">{pending ? "Sending…" : "Send message"}</button>
     </form>

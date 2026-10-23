@@ -16,6 +16,7 @@ import Testimonials from "./Testimonials";
 import Newsletter from "./Newsletter";
 import EditorialIntro from "./EditorialIntro";
 import HomeMotion from "./HomeMotion";
+import SilkBand from "../silk/SilkBand";
 import ProductCard from "../ProductCard";
 import { getActiveCampaigns } from "@/lib/campaigns";
 
@@ -44,7 +45,7 @@ export default async function HomeView({ sections }: { sections: Section[] }) {
     switch (s.type) {
       case "hero": node = <><Hero c={s.content} portals={collections.map((c) => ({ slug: c.slug, title: c.title }))} /><EditorialIntro heading="Considered silhouettes, expressive textiles." body={s.content.subheading} images={borrowed.slice(0, 2)} cta={s.content.secondaryCta?.label ? s.content.secondaryCta : s.content.primaryCta} />{promos.map((p) => <Banner key={p.id} c={{ text: p.content.text, cta: p.content.href ? { label: p.content.ctaLabel || "Shop now", href: p.content.href } : undefined, tone: p.content.tone ?? "gold" }} />)}</>; break;
       case "banner": node = <Banner c={s.content} />; break;
-      case "collections": node = <Collections c={s.content} collections={collections} />; break;
+      case "collections": node = <><Collections c={s.content} collections={collections} /><SilkBand words={collections.slice(0, 6).map((c) => c.title)} /></>; break;
       case "new_arrivals": {
         const items = s.content.productIds?.length ? await safe(getCardsByIds(s.content.productIds), []) : arrivals.slice(0, s.content.limit ?? 12);
         node = <ProductRail title={s.content.title} intro={s.content.intro} products={items} href="/shop?sort=newest" />; break;
@@ -56,10 +57,11 @@ export default async function HomeView({ sections }: { sections: Section[] }) {
       case "favorites": {
         const items = s.content.productIds?.length ? await safe(getCardsByIds(s.content.productIds), []) : favourites.slice(0, s.content.limit ?? 8);
         node = items.length ? (
-          <section aria-labelledby={`fav-${s.id}`} className="container-x py-20 sm:py-28">
-            <h2 id={`fav-${s.id}`} className="display text-5xl sm:text-6xl" data-reveal>{s.content.title}</h2>
-            {s.content.intro && <p className="mt-3 mb-10 text-charcoal/65">{s.content.intro}</p>}
-            <div className="grid grid-cols-2 gap-x-5 gap-y-12 lg:grid-cols-4">{items.map((p) => <ProductCard key={p.id} p={p} />)}</div>
+          <section aria-labelledby={`fav-${s.id}`} className="container-x py-24 sm:py-32">
+            <p className="kicker mb-6" data-reveal>Most loved</p>
+            <h2 id={`fav-${s.id}`} className="display text-[clamp(2.8rem,6vw,6.5rem)] text-aubergine" data-reveal>{s.content.title}</h2>
+            {s.content.intro && <p className="mb-14 mt-4 max-w-md text-charcoal/65">{s.content.intro}</p>}
+            <div className="mt-14 grid grid-cols-2 gap-x-6 gap-y-16 lg:grid-cols-4">{items.map((p) => <ProductCard key={p.id} p={p} />)}</div>
           </section>
         ) : null; break;
       }

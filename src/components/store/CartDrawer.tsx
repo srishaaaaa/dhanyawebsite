@@ -17,11 +17,11 @@ export default function CartDrawer() {
 
   return (
     <dialog ref={ref} onClose={() => setCartOpen(false)} onClick={(e) => e.target === ref.current && setCartOpen(false)} aria-label="Shopping bag"
-      className="drawer-in m-0 ml-auto h-dvh max-h-none w-[min(100vw,440px)] bg-ivory p-0 text-charcoal backdrop:bg-aubergine/50">
+      className="drawer-in m-0 ml-auto h-dvh max-h-none w-[min(100vw,460px)] border-l border-gold/30 bg-ivory p-0 text-charcoal backdrop:bg-plum/60">
       <div className="flex h-full flex-col">
-        <div className="flex items-center justify-between border-b border-charcoal/10 px-6 py-5">
-          <h2 className="font-serif text-2xl">Your bag{cart?.count ? ` (${cart.count})` : ""}</h2>
-          <button onClick={() => setCartOpen(false)} aria-label="Close bag" className="p-1"><X size={20} strokeWidth={1.4} /></button>
+        <div className="stage flex items-center justify-between px-6 py-6">
+          <div><p className="kicker mb-2">Your selection</p><h2 className="font-serif text-3xl font-light leading-none">The bag{cart?.count ? <span className="ml-2 text-gold">({cart.count})</span> : ""}</h2></div>
+          <button onClick={() => setCartOpen(false)} aria-label="Close bag" className="p-1 transition-transform duration-500 hover:rotate-90"><X size={22} strokeWidth={1.2} /></button>
         </div>
         <CartLines />
         {cart && cart.lines.length > 0 && (
@@ -56,7 +56,7 @@ export function CartLines({ large = false }: { large?: boolean }) {
   if (cart.lines.length === 0) {
     return (
       <div className="flex flex-1 flex-col items-center justify-center gap-4 p-10 text-center">
-        <p className="font-serif text-3xl">Your bag is empty</p>
+        <p className="font-serif text-4xl font-light">The bag is empty</p>
         <p className="text-sm text-charcoal/60 max-w-xs">Pieces you add will wait here while you browse.</p>
         <Link href="/shop" onClick={() => setCartOpen(false)} className="btn-outline mt-2">Explore the collection</Link>
       </div>
@@ -67,13 +67,13 @@ export function CartLines({ large = false }: { large?: boolean }) {
       {cart.issues.length > 0 && <ul role="alert" className="my-4 space-y-1 border border-burgundy/30 bg-rose/60 p-3 text-sm text-burgundy">{cart.issues.map((i) => <li key={i}>{i}</li>)}</ul>}
       <ul className="divide-y divide-charcoal/10">
         {cart.lines.map((l) => (
-          <li key={l.id} className={`flex gap-4 py-5 ${l.purchasable ? "" : "opacity-60"}`}>
+          <li key={l.id} className={`toast-in flex gap-4 py-6 ${l.purchasable ? "" : "opacity-60"}`}>
             <Link href={`/products/${l.slug}`} onClick={() => setCartOpen(false)} className="shrink-0">
               <Img src={l.image} alt={l.name} width={240} sizes="96px" className={`${large ? "h-40 w-32" : "h-28 w-[84px]"} object-cover`} />
             </Link>
             <div className="flex min-w-0 flex-1 flex-col">
               <div className="flex justify-between gap-3">
-                <Link href={`/products/${l.slug}`} onClick={() => setCartOpen(false)} className={`font-serif ${large ? "text-xl" : "text-lg"} leading-snug hover:text-burgundy`}>{l.name}</Link>
+                <Link href={`/products/${l.slug}`} onClick={() => setCartOpen(false)} className={`font-serif font-light ${large ? "text-2xl" : "text-xl"} leading-snug hover:text-burgundy`}>{l.name}</Link>
                 <span className="text-sm tabular-nums whitespace-nowrap">{formatINR(l.lineTotal)}</span>
               </div>
               <p className="text-xs text-charcoal/60 mt-1">{[l.color, l.size && `Size ${l.size}`].filter(Boolean).join(" · ")}</p>
